@@ -10,6 +10,7 @@ const core = require('@actions/core'),
 async function dependencies() {
   try {
     await execute.exec('sudo', ['apt-get', 'install', '-y', 'espeak']);
+    await execute.exec('wget', ['-O', 'OpenDyslexic-Regular.otf', 'https://raw.githubusercontent.com/antijingoist/opendyslexic/master/compiled/OpenDyslexic-Regular.otf']);
   } catch (error) {
     core.setFailed(error.message);
     return false;
@@ -101,20 +102,9 @@ async function upload(file, filename, url) {
     }
 }
 
-async function downloadFont(){
-    try {
-        const result = await fetch("https://raw.githubusercontent.com/antijingoist/opendyslexic/master/compiled/OpenDyslexic-Regular.otf");
-        const fileStream = await fs.writeFile("OpenDyslexic-Regular.otf", result);
-    } catch (err) {
-        core.setFailed('[ERROR]:' + err.message);
-        return false
-    }
-}
-
 async function run() {
     try {
         await dependencies();
-        await downloadFont();
         const token = core.getInput('token');
         const octokit = github.getOctokit(token);
         let tts;
