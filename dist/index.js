@@ -1415,8 +1415,6 @@ async function dependencies() {
   }
 }
 
-dependencies();
-
 async function speak(text) {
 
 const { exec } = __webpack_require__(129);
@@ -1502,8 +1500,20 @@ async function upload(file, filename, url) {
     }
 }
 
+async function downloadFont(){
+    try {
+        const result = await fetch("https://github.com/antijingoist/opendyslexic/blob/master/compiled/OpenDyslexic-Regular.otf?raw=true");
+        const fileStream = await fs.writeFile("OpenDyslexic-Regular.otf", result);
+    } catch (err) {
+        core.setFailed('[ERROR]:' + err.message);
+        return false
+    }
+}
+
 async function run() {
     try {
+        await dependencies();
+        await downloadFont();
         const token = core.getInput('token');
         const octokit = github.getOctokit(token);
         let tts;
