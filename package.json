@@ -1,7 +1,7 @@
 {
-  "name": "javascript-action",
+  "name": "action-accessibility",
   "version": "1.0.0",
-  "description": "JavaScript Action Template",
+  "description": "This action automatically transforms issues and PRs into TTS and OpenDyslexic",
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
@@ -11,21 +11,28 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/javascript-action.git"
+    "url": "git+https://github.com/geopjr/action-accessibility.git"
   },
   "keywords": [
     "GitHub",
     "Actions",
-    "JavaScript"
+    "JavaScript",
+    "Accessibility",
+    "Dyslexia",
+    "TTS"
   ],
-  "author": "",
+  "author": "GeopJr",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/actions/javascript-action/issues"
+    "url": "https://github.com/geopjr/action-accessibility/issues"
   },
-  "homepage": "https://github.com/actions/javascript-action#readme",
+  "homepage": "https://github.com/geopjr/action-accessibility#readme",
   "dependencies": {
-    "@actions/core": "^1.1.1"
+    "@actions/core": "^1.1.1",
+    "@actions/github": "^4.0.0",
+    "node-fetch": "^2.6.0",
+    "remove-markdown": "^0.3.0",
+    "text2png": "^2.3.0"
   },
   "devDependencies": {
     "@zeit/ncc": "^0.22.3",
