@@ -6,7 +6,6 @@ inputs:
     required: true
 runs:
   using: 'node12'
-  pre: 'pre.js'
   main: 'dist/index.js'
 branding:
   icon: "user-plus"

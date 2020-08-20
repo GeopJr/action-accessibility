@@ -4,7 +4,19 @@ const core = require('@actions/core'),
     fs = require("fs").promises,
     text2png = require('text2png'),
     fetch = require('node-fetch'),
-    FormData = require('form-data');
+    FormData = require('form-data')
+    execute = require("@actions/exec");
+
+async function dependencies() {
+  try {
+    await execute.exec('sudo', ['apt-get', 'install', '-y', 'espeak']);
+  } catch (error) {
+    core.setFailed(error.message);
+    return false;
+  }
+}
+
+dependencies();
 
 async function speak(text) {
 
