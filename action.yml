@@ -1,4 +1,4 @@
-name: 'accessibility'
+name: 'action-accessibility'
 description: 'A must-have to expand the accessibility options in the open source community'
 inputs:
   token:
