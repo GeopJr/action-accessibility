@@ -1502,7 +1502,7 @@ async function upload(file, filename, url) {
 
 async function downloadFont(){
     try {
-        const result = await fetch("https://github.com/antijingoist/opendyslexic/blob/master/compiled/OpenDyslexic-Regular.otf?raw=true");
+        const result = await fetch("https://raw.githubusercontent.com/antijingoist/opendyslexic/master/compiled/OpenDyslexic-Regular.otf");
         const fileStream = await fs.writeFile("OpenDyslexic-Regular.otf", result);
     } catch (err) {
         core.setFailed('[ERROR]:' + err.message);
