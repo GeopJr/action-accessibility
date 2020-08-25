@@ -58,6 +58,7 @@ async function saveImage(input) {
     try {
         await fs.appendFile('image.jpg', text2png(input, {
             font: "30px OpenDyslexic",
+            backgroundColor: "white",
             localFontPath: './OpenDyslexic-Regular.otf',
             localFontName: 'OpenDyslexic'
         }));
@@ -137,7 +138,6 @@ async function run() {
             const audioUrl = await upload("tts.wav", "tts.wav", await getServer());
             const imageUrl = await upload("image.jpg", "image.jpg", await getServer())
             const replyBody = "Accessibility Links:\nAudio Link:" + audioUrl + "\nImage Link:" + imageUrl
-            console.log(replyBody, github.context.payload.repository.owner.login, github.context.payload.repository.name, github.context.payload.issue.number)
             await octokit.issues.createComment({
                 owner: github.context.payload.repository.owner.login,
                 repo: github.context.payload.repository.name,
