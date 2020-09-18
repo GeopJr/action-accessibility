@@ -1512,7 +1512,7 @@ async function run() {
             const issueTitle = issue.title;
             const issueBody = issue.body;
             const strippedBody = stripMd(issueBody);
-            const text = "Issue Titile: " + issueTitle + ".\nIssue Body: " + strippedBody
+            const text = "Issue Title: " + issueTitle + ".\nIssue Body: " + strippedBody
             tts = await speak(text);
             await saveImage(text);
             const url = await getServer();
@@ -1548,7 +1548,7 @@ async function run() {
             const prTitle = pullRequest.title;
             const prBody = pullRequest.body;
             const strippedBody = stripMd(prBody)
-            const text = "Pull Request Titile: " + prTitle + ".\nPull Request Body: " + strippedBody
+            const text = "Pull Request Title: " + prTitle + ".\nPull Request Body: " + strippedBody
             tts = await speak(text)
             await saveImage(text)
             const url = await getServer();
