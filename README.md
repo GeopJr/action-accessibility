@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: GeopJr/action-accessibility@v1.0.8
+    - uses: GeopJr/action-accessibility@v1.0.9
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -40,5 +40,6 @@ Accessibility Links:
 Audio Link:https://gofile.io/d/hUSyNh
 Image Link:https://gofile.io/d/zq8ZlI
 ```
+(You can see more on the issues and pull requests pages of this repo. Files might have been removed by users that don't like a11y.)
 
 This is [my submission](https://dev.to/geopjr/action-accessibility-a-github-action-for-those-in-need-hg7) for [DEV.TO Action Hackathon](https://dev.to/devteam/announcing-the-github-actions-hackathon-on-dev-3ljn). 
