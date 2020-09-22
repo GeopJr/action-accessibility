@@ -1447,7 +1447,7 @@ async function saveBuffer(input) {
         await fs.appendFile('tts.wav', input);
     } catch (err) {
         core.setFailed('[ERROR]:' + err.message);
-        success = false;
+        return process.exit(1);
     }
     return success;
 }
@@ -1457,12 +1457,13 @@ async function saveImage(input) {
     try {
         await fs.appendFile('image.jpg', text2png(input, {
             font: "30px OpenDyslexic",
+            backgroundColor: "white",
             localFontPath: './OpenDyslexic-Regular.otf',
             localFontName: 'OpenDyslexic'
         }));
     } catch (err) {
         core.setFailed('[ERROR]:' + err.message);
-        success = false;
+        return process.exit(1);
     }
     return success;
 }
@@ -1472,10 +1473,15 @@ async function getServer() {
     try {
         const response = await fetch(url)
         const json = await response.json()
-        return json.status === "ok" ? `https://${json.data.server}.gofile.io/uploadFile` : false;
+        if(json.status === "ok") {
+            return `https://${json.data.server}.gofile.io/uploadFile`
+        } else {
+            core.setFailed('[ERROR]: GoFile returned ' + json.status);
+            return process.exit(1);
+        }
     } catch (err) {
         core.setFailed('[ERROR]:' + err.message);
-        return false
+        return process.exit(1);
     }
 }
 
@@ -1494,10 +1500,15 @@ async function upload(file, filename, url) {
             body: form
         })
         const json = await response.json()
-        return json.status === "ok" ? `https://gofile.io/d/${json.data.code}` : false;
+        if(json.status === "ok") {
+            return `https://gofile.io/d/${json.data.code}`
+        } else {
+            core.setFailed('[ERROR]: GoFile returned ' + json.status);
+            return process.exit(1);
+        }
     } catch (err) {
         core.setFailed('[ERROR]:' + err.message);
-        return false
+        return process.exit(1);
     }
 }
 
@@ -1533,10 +1544,10 @@ async function run() {
 
             tts = await speak(text)
             await saveImage(text)
-            const audioUrl = await upload("tts.wav", "tts.wav", await getServer());
-            const imageUrl = await upload("image.jpg", "image.jpg", await getServer())
+            const url = await getServer();
+            const audioUrl = await upload("tts.wav", "tts.wav", url);
+            const imageUrl = await upload("image.jpg", "image.jpg", url)
             const replyBody = "Accessibility Links:\nAudio Link:" + audioUrl + "\nImage Link:" + imageUrl
-            console.log(replyBody, github.context.payload.repository.owner.login, github.context.payload.repository.name, github.context.payload.issue.number)
             await octokit.issues.createComment({
                 owner: github.context.payload.repository.owner.login,
                 repo: github.context.payload.repository.name,
@@ -3933,6 +3944,12 @@ function convertBody(buffer, headers) {
 	// html4
 	if (!res && str) {
 		res = /<meta[\s]+?http-equiv=(['"])content-type\1[\s]+?content=(['"])(.+?)\2/i.exec(str);
+		if (!res) {
+			res = /<meta[\s]+?content=(['"])(.+?)\1[\s]+?http-equiv=(['"])content-type\3/i.exec(str);
+			if (res) {
+				res.pop(); // drop last quote
+			}
+		}
 
 		if (res) {
 			res = /charset=(.*)/i.exec(res.pop());
@@ -4940,7 +4957,7 @@ function fetch(url, opts) {
 				// HTTP fetch step 5.5
 				switch (request.redirect) {
 					case 'error':
-						reject(new FetchError(`redirect mode is set to error: ${request.url}`, 'no-redirect'));
+						reject(new FetchError(`uri requested responds with a redirect, redirect mode is set to error: ${request.url}`, 'no-redirect'));
 						finalize();
 						return;
 					case 'manual':
@@ -4979,7 +4996,8 @@ function fetch(url, opts) {
 							method: request.method,
 							body: request.body,
 							signal: request.signal,
-							timeout: request.timeout
+							timeout: request.timeout,
+							size: request.size
 						};
 
 						// HTTP-redirect fetch step 9
@@ -9563,7 +9581,7 @@ function descending(a, b)
 /***/ 896:
 /***/ (function(module) {
 
-module.exports = {"_args":[["canvas@2.6.1","/home/geopjr/action-accessibility"]],"_from":"canvas@2.6.1","_id":"canvas@2.6.1","_inBundle":false,"_integrity":"sha512-S98rKsPcuhfTcYbtF53UIJhcbgIAK533d1kJKMwsMwAIFgfd58MOyxRud3kktlzWiEkFliaJtvyZCBtud/XVEA==","_location":"/canvas","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"canvas@2.6.1","name":"canvas","escapedName":"canvas","rawSpec":"2.6.1","saveSpec":null,"fetchSpec":"2.6.1"},"_requiredBy":["/text2png"],"_resolved":"https://registry.npmjs.org/canvas/-/canvas-2.6.1.tgz","_spec":"2.6.1","_where":"/home/geopjr/action-accessibility","author":{"name":"TJ Holowaychuk","email":"tj@learnboost.com"},"binary":{"module_name":"canvas","module_path":"build/Release","host":"https://github.com/node-gfx/node-canvas-prebuilt/releases/download/","remote_path":"v{version}","package_name":"{module_name}-v{version}-{node_abi}-{platform}-{libc}-{arch}.tar.gz"},"browser":"browser.js","bugs":{"url":"https://github.com/Automattic/node-canvas/issues"},"contributors":[{"name":"Nathan Rajlich","email":"nathan@tootallnate.net"},{"name":"Rod Vagg","email":"r@va.gg"},{"name":"Juriy Zaytsev","email":"kangax@gmail.com"}],"dependencies":{"nan":"^2.14.0","node-pre-gyp":"^0.11.0","simple-get":"^3.0.3"},"description":"Canvas graphics API backed by Cairo","devDependencies":{"@types/node":"^10.12.18","assert-rejects":"^1.0.0","dtslint":"^0.5.3","express":"^4.16.3","mocha":"^5.2.0","pixelmatch":"^4.0.2","standard":"^12.0.1"},"engines":{"node":">=6"},"files":["binding.gyp","lib/","src/","util/","types/index.d.ts"],"homepage":"https://github.com/Automattic/node-canvas","keywords":["canvas","graphic","graphics","pixman","cairo","image","images","pdf"],"license":"MIT","main":"index.js","name":"canvas","repository":{"type":"git","url":"git://github.com/Automattic/node-canvas.git"},"scripts":{"benchmark":"node benchmarks/run.js","dtslint":"dtslint types","install":"node-pre-gyp install --fallback-to-build","prebenchmark":"node-gyp build","pretest":"standard examples/*.js test/server.js test/public/*.js benchmarks/run.js lib/context2d.js util/has_lib.js browser.js index.js && node-gyp build","pretest-server":"node-gyp build","test":"mocha test/*.test.js","test-server":"node test/server.js"},"types":"types/index.d.ts","version":"2.6.1"};
+module.exports = {"_args":[["canvas@2.6.1","/home/geopjr/nyaa"]],"_from":"canvas@2.6.1","_id":"canvas@2.6.1","_inBundle":false,"_integrity":"sha512-S98rKsPcuhfTcYbtF53UIJhcbgIAK533d1kJKMwsMwAIFgfd58MOyxRud3kktlzWiEkFliaJtvyZCBtud/XVEA==","_location":"/canvas","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"canvas@2.6.1","name":"canvas","escapedName":"canvas","rawSpec":"2.6.1","saveSpec":null,"fetchSpec":"2.6.1"},"_requiredBy":["/text2png"],"_resolved":"https://registry.npmjs.org/canvas/-/canvas-2.6.1.tgz","_spec":"2.6.1","_where":"/home/geopjr/nyaa","author":{"name":"TJ Holowaychuk","email":"tj@learnboost.com"},"binary":{"module_name":"canvas","module_path":"build/Release","host":"https://github.com/node-gfx/node-canvas-prebuilt/releases/download/","remote_path":"v{version}","package_name":"{module_name}-v{version}-{node_abi}-{platform}-{libc}-{arch}.tar.gz"},"browser":"browser.js","bugs":{"url":"https://github.com/Automattic/node-canvas/issues"},"contributors":[{"name":"Nathan Rajlich","email":"nathan@tootallnate.net"},{"name":"Rod Vagg","email":"r@va.gg"},{"name":"Juriy Zaytsev","email":"kangax@gmail.com"}],"dependencies":{"nan":"^2.14.0","node-pre-gyp":"^0.11.0","simple-get":"^3.0.3"},"description":"Canvas graphics API backed by Cairo","devDependencies":{"@types/node":"^10.12.18","assert-rejects":"^1.0.0","dtslint":"^0.5.3","express":"^4.16.3","mocha":"^5.2.0","pixelmatch":"^4.0.2","standard":"^12.0.1"},"engines":{"node":">=6"},"files":["binding.gyp","lib/","src/","util/","types/index.d.ts"],"homepage":"https://github.com/Automattic/node-canvas","keywords":["canvas","graphic","graphics","pixman","cairo","image","images","pdf"],"license":"MIT","main":"index.js","name":"canvas","repository":{"type":"git","url":"git://github.com/Automattic/node-canvas.git"},"scripts":{"benchmark":"node benchmarks/run.js","dtslint":"dtslint types","install":"node-pre-gyp install --fallback-to-build","prebenchmark":"node-gyp build","pretest":"standard examples/*.js test/server.js test/public/*.js benchmarks/run.js lib/context2d.js util/has_lib.js browser.js index.js && node-gyp build","pretest-server":"node-gyp build","test":"mocha test/*.test.js","test-server":"node test/server.js"},"types":"types/index.d.ts","version":"2.6.1"};
 
 /***/ }),
 

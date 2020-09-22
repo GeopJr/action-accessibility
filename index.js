@@ -48,7 +48,7 @@ async function saveBuffer(input) {
         await fs.appendFile('tts.wav', input);
     } catch (err) {
         core.setFailed('[ERROR]:' + err.message);
-        success = false;
+        return process.exit(1);
     }
     return success;
 }
@@ -64,7 +64,7 @@ async function saveImage(input) {
         }));
     } catch (err) {
         core.setFailed('[ERROR]:' + err.message);
-        success = false;
+        return process.exit(1);
     }
     return success;
 }
@@ -74,10 +74,15 @@ async function getServer() {
     try {
         const response = await fetch(url)
         const json = await response.json()
-        return json.status === "ok" ? `https://${json.data.server}.gofile.io/uploadFile` : false;
+        if(json.status === "ok") {
+            return `https://${json.data.server}.gofile.io/uploadFile`
+        } else {
+            core.setFailed('[ERROR]: GoFile returned ' + json.status);
+            return process.exit(1);
+        }
     } catch (err) {
         core.setFailed('[ERROR]:' + err.message);
-        return false
+        return process.exit(1);
     }
 }
 
@@ -96,10 +101,15 @@ async function upload(file, filename, url) {
             body: form
         })
         const json = await response.json()
-        return json.status === "ok" ? `https://gofile.io/d/${json.data.code}` : false;
+        if(json.status === "ok") {
+            return `https://gofile.io/d/${json.data.code}`
+        } else {
+            core.setFailed('[ERROR]: GoFile returned ' + json.status);
+            return process.exit(1);
+        }
     } catch (err) {
         core.setFailed('[ERROR]:' + err.message);
-        return false
+        return process.exit(1);
     }
 }
 
@@ -135,8 +145,9 @@ async function run() {
 
             tts = await speak(text)
             await saveImage(text)
-            const audioUrl = await upload("tts.wav", "tts.wav", await getServer());
-            const imageUrl = await upload("image.jpg", "image.jpg", await getServer())
+            const url = await getServer();
+            const audioUrl = await upload("tts.wav", "tts.wav", url);
+            const imageUrl = await upload("image.jpg", "image.jpg", url)
             const replyBody = "Accessibility Links:\nAudio Link:" + audioUrl + "\nImage Link:" + imageUrl
             await octokit.issues.createComment({
                 owner: github.context.payload.repository.owner.login,
