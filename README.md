@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: GeopJr/action-accessibility@v1.0.9
+    - uses: GeopJr/action-accessibility@v1.0.10
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
 ```
