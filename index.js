@@ -130,7 +130,7 @@ async function run() {
             const url = await getServer();
             const audioUrl = await upload("tts.wav", "tts.wav", url)
             const imageUrl = await upload("image.jpg", "image.jpg", url)
-            const replyBody = "Accessibility Links:\nAudio Link:" + audioUrl + "\nImage Link:" + imageUrl
+            const replyBody = "Accessibility Links:\nAudio Link: " + audioUrl + "\nImage Link: " + imageUrl
             await octokit.issues.createComment({
                 owner: github.context.payload.repository.owner.login,
                 repo: github.context.payload.repository.name,
@@ -148,7 +148,7 @@ async function run() {
             const url = await getServer();
             const audioUrl = await upload("tts.wav", "tts.wav", url);
             const imageUrl = await upload("image.jpg", "image.jpg", url)
-            const replyBody = "Accessibility Links:\nAudio Link:" + audioUrl + "\nImage Link:" + imageUrl
+            const replyBody = "Accessibility Links:\nAudio Link: " + audioUrl + "\nImage Link: " + imageUrl
             await octokit.issues.createComment({
                 owner: github.context.payload.repository.owner.login,
                 repo: github.context.payload.repository.name,
@@ -166,7 +166,7 @@ async function run() {
             const url = await getServer();
             const audioUrl = await upload("tts.wav", "tts.wav", url)
             const imageUrl = await upload("image.jpg", "image.jpg", url)
-            const replyBody = "Accessibility Links:\nAudio Link:" + audioUrl + "\nImage Link:" + imageUrl
+            const replyBody = "Accessibility Links:\nAudio Link: " + audioUrl + "\nImage Link: " + imageUrl
             await octokit.pulls.createReview({
                 owner: github.context.payload.repository.owner.login,
                 repo: github.context.payload.repository.name,
