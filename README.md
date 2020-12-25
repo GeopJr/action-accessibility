@@ -62,6 +62,14 @@ Please ensure the following apply before opening a PR:
 - `npm run lint` / `yarn lint` complete successfully (feel free to run `lint:fix` to auto fix most of the warns & errors)
 - You are not pushing (the huge) `dist/` folder
 
-## I am not an expert in A11Y, if you feel like something can be improved, please open an issue and I'll try to do it as soon as possible!
+### I am not an expert in A11Y, if you feel like something can be improved, please open an issue and I'll try to do it as soon as possible!
+
+# Contributors
+
+<a href="https://github.com/GeopJr/action-accessibility/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=GeopJr/action-accessibility" />
+</a>
+
+Made with [contributors-img](https://contrib.rocks).
 
 This was [my submission](https://dev.to/geopjr/action-accessibility-a-github-action-for-those-in-need-hg7) for the [DEV.TO Action Hackathon](https://dev.to/devteam/announcing-the-github-actions-hackathon-on-dev-3ljn).
