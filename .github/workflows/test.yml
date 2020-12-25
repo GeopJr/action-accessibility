@@ -12,10 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          path: main
-      - name: Install espeak
-        run: sudo apt-get install espeak
-      - uses: ./
+      - uses: GeopJr/action-accessibility@v2.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+
