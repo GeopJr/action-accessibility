@@ -1,0 +1,24 @@
+name: Build
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - run: npm install
+      - run: npm run prepare
+      - name: Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git add dist/ -f
+          git commit -m "Add build extras"
+          git push "https://GeopJr:${{ secrets.GITHUB_TOKEN }}@github.com/GeopJr/test1" HEAD:main -f

@@ -1,0 +1,19 @@
+name: Accessibility
+on:
+  pull_request:
+    types: [opened, edited]
+  issues:
+    types: [opened, edited]
+  issue_comment:
+    types: [created, edited]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install espeak
+        run: sudo apt-get install espeak
+      - uses: ./
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}

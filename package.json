@@ -1,0 +1,50 @@
+{
+  "name": "action-accessibility",
+  "version": "2.0.0",
+  "description": "This action automatically transforms issues and PRs into TTS and OpenDyslexic",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "ncc build index.js -o dist --source-map",
+    "test": "jest",
+    "all": "npm run lint && npm run prepare && npm run test",
+    "lint": "standard && prettier-standard --check",
+    "lint:fix": "standard --fix && prettier-standard --format"
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geopjr/action-accessibility.git"
+  },
+  "keywords": [
+    "GitHub",
+    "Actions",
+    "JavaScript",
+    "Accessibility",
+    "Dyslexia",
+    "TTS"
+  ],
+  "author": "GeopJr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/geopjr/action-accessibility/issues"
+  },
+  "homepage": "https://github.com/geopjr/action-accessibility#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/exec": "^1.0.4",
+    "@actions/github": "^4.0.0",
+    "node-fetch": "^2.6.1",
+    "remark": "^13.0.0",
+    "strip-markdown": "^4.0.0",
+    "text2png": "^2.3.0"
+  },
+  "devDependencies": {
+    "@zeit/ncc": "^0.22.3",
+    "babel-eslint": "^10.1.0",
+    "jest": "^26.6.3",
+    "prettier-standard": "^16.4.1",
+    "standard": "^16.0.3"
+  }
+}

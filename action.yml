@@ -1,0 +1,12 @@
+name: 'action-accessibility'
+description: 'A must-have to expand the accessibility options in the open source community'
+inputs:
+  token:
+    description: 'Your github token'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: 'user-plus'
+  color: 'gray-dark'
