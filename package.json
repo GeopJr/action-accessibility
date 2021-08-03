@@ -36,7 +36,7 @@
     "@actions/exec": "^1.0.4",
     "@actions/github": "^5.0.0",
     "node-fetch": "^2.6.1",
-    "remark": "^13.0.0",
+    "remark": "^14.0.1",
     "strip-markdown": "^4.0.0",
     "text2png": "^2.3.0"
   },
