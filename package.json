@@ -37,7 +37,7 @@
     "@actions/github": "^5.0.0",
     "node-fetch": "^3.0.0",
     "remark": "^14.0.1",
-    "strip-markdown": "^4.0.0",
+    "strip-markdown": "^5.0.0",
     "text2png": "^2.3.0"
   },
   "devDependencies": {
