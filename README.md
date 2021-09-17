@@ -1,4 +1,12 @@
-# Accessibility GitHub Action
+# RETIRED
+
+This action is kinda useless. People who actually need either of the functions it provided will probably have them already from their OS rather than depend on a GH action.
+
+Plus the huge dist folder and GH actions not supporting node >= 14 made it difficult to maintain.
+
+Thanks for using this action and contributing to a more accessible web!
+
+## Accessibility GitHub Action
 
 Programming is for everyone. People shouldn't be unable to contribute because of disabilities or difficulties.
 This is what this action aims to solve!
@@ -8,7 +16,7 @@ reply with a an image of the text using [OpenDyslexic](https://opendyslexic.org/
 
 Those files are being uploaded to [GoFile](https://gofile.io/welcome), please support them on [Patreon](https://www.patreon.com/gofile).
 
-# Example:
+## Example:
 
 ```yml
 name: Accessibility
@@ -30,7 +38,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-# In-action:
+## In-action:
 
 This is an example issue:
 ![example issue](https://i.imgur.com/5ixNhAY.png)
@@ -45,14 +53,14 @@ The action was triggered by [this comment](https://github.com/GeopJr/test1/pull/
 
 (You can see more on the issues and pull requests pages of this repo.)
 
-# Cloning
+## Cloning
 All branches except `dev` are pretty big in size.
 To clone just that all you have to do is
 ```sh
 $ git clone https://github.com/GeopJr/action-accessibility -b dev
 ```
 
-# Contributing
+<!-- # Contributing
 
 #### All contributions are welcome!
 Please ensure the following apply before opening a PR:
@@ -70,6 +78,6 @@ Please ensure the following apply before opening a PR:
   <img src="https://contrib.rocks/image?repo=GeopJr/action-accessibility" />
 </a>
 
-Made with [contributors-img](https://contrib.rocks).
+Made with [contributors-img](https://contrib.rocks). -->
 
 This was [my submission](https://dev.to/geopjr/action-accessibility-a-github-action-for-those-in-need-hg7) for the [DEV.TO Action Hackathon](https://dev.to/devteam/announcing-the-github-actions-hackathon-on-dev-3ljn).
